@@ -1,12 +1,11 @@
 #%%
 import numpy as np
-fruits = ["lemon","pineapple","watermelon","peach"]
 
 arr_2d = np.array([range(1,11), range(1,11), range(1,11)])
 
 # print(f"{arr_2d.shape}")
 # print(f"{arr_2d.size}")
-# print(f"{arr_2d.T.shape}")
+print(f"{arr_2d.T.shape}")
 # print(f"{arr_2d.dtype}")
 
 np.array(["Time","to","learn"])
@@ -28,5 +27,10 @@ print(f"{arr_create3}")
 # np.identity(4)
 
 np.arange(10).reshape(5, 2)
+
+print('------------')
+my_array = np.array([10, 32, 13, 14, 51, 6])
+average_val = my_array.mean()
+print("Avg value: ", average_val)
 # %%
 
