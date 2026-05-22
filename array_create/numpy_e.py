@@ -5,8 +5,8 @@ arr_2d = np.array([range(1,11), range(1,11), range(1,11)])
 
 # print(f"{arr_2d.shape}")
 # print(f"{arr_2d.size}")
-print(f"{arr_2d.T.shape}")
 # print(f"{arr_2d.dtype}")
+print(f"{arr_2d.T.shape}")
 
 np.array(["Time","to","learn"])
 
@@ -30,7 +30,8 @@ np.arange(10).reshape(5, 2)
 
 print('------------')
 my_array = np.array([10, 32, 13, 14, 51, 6])
-average_val = my_array.mean()
-print("Avg value: ", average_val)
+print("Avg value: ", my_array.mean())
+
+
 # %%
 
