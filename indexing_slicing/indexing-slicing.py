@@ -37,6 +37,4 @@ print(f"Middle column --- {array3matrix[:, 1]}")
 # Access only first element of the last column
 print(f"First element of the last column --- {array3matrix[0, 2]}")
 
-
-
 # %%

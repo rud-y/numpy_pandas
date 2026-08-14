@@ -32,3 +32,4 @@ for x in inventory_list:
  new_inventory.append(x+2)
 
 print(f" new_inventory:{new_inventory}")
+# %%
