@@ -42,4 +42,16 @@ my_array[even_odd != 'odd'] = 0
 print(f"my_array[even_odd == 'odd'] = 0 -> {my_array}")
 
 
+# Exer: Filter products with price greater than 20
+# Shipping_cost_array - if price > 20 then no shipping fee, otherwise it is 5
+products = np.array(["turkey", "salad", "gourment mix", "pepsi", "coffee", "specialty oatcakes box"])
+prices = np.array([34.99, 6.99, 20.99, 4.99, 9.99, 22.99])
+
+fancy_specials_mask = (prices > 20) | (products == 'coffee')
+np.where(prices > 20, 0, 5)
+
+print(f"Fancy specials: {products[fancy_specials_mask]}")
+print(f"Shipping costs: {np.where(prices > 20, 0, 5)}")
+
+
 #%%
