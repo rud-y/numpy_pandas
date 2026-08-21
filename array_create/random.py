@@ -5,7 +5,7 @@ import numpy as np
 rng = default_rng(12345)
 
 random_array = rng.random(3)
-# print(f" random_array {random_array}")
+print(f" random_array {random_array}")
 
 mean, stddev = 3, 0.5
 random_normal = rng.normal(mean, stddev, size=5)
