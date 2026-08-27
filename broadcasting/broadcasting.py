@@ -2,13 +2,13 @@
 import numpy as np
 import pandas as pd
 
-test_arr = np.array([[1,2,3], [1,2,3], [1,2,3]])
+test_arr = np.array([[1,2,3], [4,15,6], [1,2,3]])
 
 print(f"array broadcast + 1: {test_arr + np.array([1,10,20])}")
-print(f"array broadcast and reshape: {test_arr + np.array([5,5,5])}")
+print(f"array broadcast and reshape: {test_arr + np.array([5,10,20])}")
 
 # !!!
-print(f"array broadcast and reshape !!! : {test_arr[0, :] + test_arr[:, 1].reshape(3, 1)}")
+print(f"array broadcast and reshape - example 2 !!! : {test_arr[0, :] + test_arr[:, 1].reshape(3, 1)}")
 
 
 car_types = np.array(["Toyota", "Honda", "Skoda", "Vauxhall", "Mercedes", "Audi", "Hyundai", "Audi", "Range Rover", "Honda", "Skoda", "Kia", "Seat"])
