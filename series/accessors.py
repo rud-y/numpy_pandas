@@ -21,4 +21,8 @@ print(f"Using .loc[0:3] : {my_series.loc[0:3]}")
 # Index reset
 print(f"Resetting index: {my_series.reset_index(drop=True).loc[0:3]}")
 
+# --------- #
+
+# Filtering series , logical test
+my_series.loc[my_series.gt("Day3")]
 #%%
