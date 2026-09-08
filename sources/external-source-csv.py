@@ -52,10 +52,28 @@ print(f"Reset index my_series: \n{my_series}")
 
 
 # Sorting data
-
-print(f"OIL 10: \n{oil_series.sort_values().iloc[:10]}")
-print(f"OIL 10, sort index: \n{oil_series.sort_values().iloc[:10].sort_index(ascending=False)}")
+print(f"OIL 10, sorted values:  \n{oil_series.sort_values().iloc[:10]}")
+print(f"OIL 10, sorted by index, descending: \n{oil_series.sort_values().iloc[:10].sort_index(ascending=False)}")
 
 mask = (oil_series.index.isin(dates)) & (oil_series <=40)
 print(f"OIL - specified dates, val. less than 40:: {oil_series[mask]}")
+
+
+# Other Series operations
+print(f"10% increase: {oil_series * 1.1 + 2}")
+print(f"Same result using methods: {oil_series.mul(1.1).add(2).round(1)}")
+
+max_price = oil_series.max()
+print(f"Max price: {max_price}")
+
+print("Percentage difference between MAX PRICE  and all other values: ")
+print(((oil_series - max_price) / max_price).round(2))
+
+
+month = oil_series[30:61].index.str[5:7].astype('int')
+print(month)
+print(f"Extract months from the index(converted to Series) for 30 entries: \n{pd.Series(month)}")
+
+
+#
 #%%
