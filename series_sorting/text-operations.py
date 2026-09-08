@@ -29,10 +29,14 @@ transaction_series = pd.Series(transactions["transactions"])
 
 print(f"Transactions : {transaction_series}")
 print(f"Transactions_series count : {transaction_series.count()}")
-print(f"First 5 ransactions_series quantile([.10]) : {transaction_series.iloc[:5].quantile([.10], interpolation="nearest")}")
+print(f"First 5 transactions_series quantile([.10]) : {transaction_series.iloc[:5].quantile([.10], interpolation="nearest")}")
 
+print(f"Sum transactions >> {transaction_series.sum()}")
+
+# ---
 my_series3 = pd.Series([5, 20,15,20,25,25], index=["day 1","day 2","day 3","day 4","day 5", "day 6"])
 
 print(f"Values counts : {my_series3.value_counts(normalize=True)}")
+# ---
 
 #%%
