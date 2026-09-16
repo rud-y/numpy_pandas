@@ -30,8 +30,27 @@ print(oil_new_price.head())
 oil_new_price_reset = oil_new_price.reset_index()
 print(f"Reset: \n{oil_new_price_reset.head()}")
 
+# 
+print("mean() after filling values with 0: !")
 
+print(oil.loc[:, "price"].fillna(0).mean())
 
+print("mean() after calculating known values mean first: !")
+print(oil.loc[:, "price"].fillna(oil.loc[:, "price"].mean()).mean())
+
+# Filtering DataFrames
+oil["benchmark"] = 107
+# print(oil)
+# oil.describe()
+
+print(">>> Only oil > benchmark:")
+oil.loc[oil["price"] > oil["benchmark"]]
+
+condition_mask = ((oil["price"] > oil["benchmark"]) & (oil["date"].str[:4] == "2014"))
+print(">>> Using condition mask ( on price and date): ")
+print(oil[condition_mask])
+
+print(f"> > > Price more than benchmark using query: {oil.query("price > benchmark")}!")
 
 
 #%%
