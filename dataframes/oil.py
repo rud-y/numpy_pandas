@@ -52,5 +52,6 @@ print(oil[condition_mask])
 
 print(f"> > > Price more than benchmark using query: {oil.query("price > benchmark")}!")
 
+#
 
 #%%
