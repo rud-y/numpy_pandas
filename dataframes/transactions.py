@@ -1,5 +1,6 @@
 #%%
 import pandas as pd
+import numpy as np
 
 trans = pd.read_csv("../csv/transactions.csv")
 print(trans.count())
@@ -80,16 +81,50 @@ trans = trans.assign(pct_to_target = trans["transaction_count"] / 2500)
 trans = trans.assign(met_target = trans["pct_to_target"] >= 1)
 
 trans["bonus_payable"] = trans["met_target"] * 100
+print(f" ---------- \n{trans.head()}")
 
 # Sum of the bonuses paid
 print(f">>> Sum of bonuses: \n{trans["bonus_payable"].sum()}")
 
-# dt for month, week
+# datetime for month and week
 trans["date"] = trans["date"].astype("datetime64[ns]")
 trans["month"] = trans["date"].dt.month
 trans["day_of_the_week"] = trans["date"].dt.dayofweek
-
 print(trans.head())
+
+
+# Task
+# create a seasonal_bonus that applies to May-Sundays, July-Mondays, and December days
+conditions = [
+ trans["month"] == 12,
+ (trans["month"] == 5) & (trans["day_of_the_week"] == 6),
+ (trans["month"] == 7) & (trans["day_of_the_week"] == 0)
+]
+
+choices = ["Holiday Bonus", "Corporate Month", "Summer Special"]
+
+trans["seasonal_bonus"] = np.select(conditions, choices, default="None")
+
+print(f">>> seasonal_bonus value counts: \n{trans["seasonal_bonus"].value_counts()}")
+
+#!!! Total number of days we need to pay the bonus
+print("_ _ _ _")
+print(trans.loc[:, "seasonal_bonus"].value_counts().iloc[1:])
+print(trans.head())
+print(">>> Original memory usage:")
+print(trans.info(memory_usage="deep"))
+
+
+# Categorical data type for met_target check ( 0, 1 True, False)
+trans = trans.astype({"met_target": "category"})
+print(trans["met_target"].cat.codes)
+# print(trans.dtypes)
+print(">>> >>> >>> ")
+print(f">>> Memory usage: \n{trans.memory_usage(deep=True)}")
+
+# print(trans.memory_usage(deep=True).sum())
+
+print(trans.loc[:, "met_target"].value_counts())
 
 
 

@@ -1,5 +1,6 @@
 #%%
 import pandas as pd
+import numpy as np
 
 oil = pd.read_csv("../csv/oil.csv")
 
@@ -50,8 +51,27 @@ condition_mask = ((oil["price"] > oil["benchmark"]) & (oil["date"].str[:4] == "2
 print(">>> Using condition mask ( on price and date): ")
 print(oil[condition_mask])
 
-print(f"> > > Price more than benchmark using query: {oil.query("price > benchmark")}!")
+print(f"> > > Price more than benchmark using query: \n{oil.query("price > benchmark")}!")
 
 #
+# oil_new_price["buy"] = np.where(oil_new_price["price"] > 100, "Too High", "Buy Now")
+# print(oil_new_price["buy"].value_counts())
+
+
+# Conditions
+conditions = [
+ (oil_new_price["price"] > 110),
+ (oil_new_price["price"] <=110) & (oil_new_price["price"] > 50),
+ (oil_new_price["price"] <= 50)
+]
+
+choices = ["Do not buy", "Buy", "100% Buy"]
+
+oil_new_price["buy"] = np.select(conditions, choices, default="??")
+
+# print(oil_new_price.tail())
+print(oil_new_price.head())
+print(oil_new_price["buy"].value_counts())
+
 
 #%%
