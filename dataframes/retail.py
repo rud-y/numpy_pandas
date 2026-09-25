@@ -14,6 +14,7 @@ sample_df.assign(
 
 print(f">>> Assigned two more cols: \n{sample_df}")
 
+# MEMORY USAGE INFO
 print(">>> Original memory usage  - retail:")
 print(sample_df.info(memory_usage="deep"))
 
