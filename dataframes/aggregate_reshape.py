@@ -1,16 +1,7 @@
 #%%
 import pandas as pd
 
-premier_league = pd.read_excel("../csv/premier_league_games_full.xlsx")
-# premier_league.head()
-
-# premier_league.groupby(["season", "HomeTeam"], as_index=False)[["HomeGoals"]].sum()
-premier_league.groupby(["season", "HomeTeam"], as_index=False)[["HomeGoals"]].sum().query("HomeTeam == 'West Ham United'")
-# premier_league.head()
-
-
-
-# --- TRANSACTIONS ---
+#### --- TRANSACTIONS --- ###
 # --------------------
 trans = pd.read_csv("../csv/transactions.csv", parse_dates=["date"])
 trans.head()
@@ -22,10 +13,29 @@ trans["bonus_payable"] = trans["met_target"] * 100
 trans["date"] = trans["date"].astype("datetime64[ns]")
 trans["month"] = trans["date"].dt.month
 trans["day_of_the_week"] = trans["date"].dt.dayofweek
-trans.head()
+# trans.head()
 
-# Group transactions to include store number and group by month(ascending) and by total value of transactions (descending)
-trans.groupby(["store_number","month"])[["transaction_count"]].sum().sort_values(["month","transaction_count"], ascending=[True, False])
+### Group transactions to include store number and group by month(ascending) and by total value of transactions (descending):
+
+print(" ==================================")
+print(trans.groupby(["store_number","month"])[["transaction_count"]].sum().sort_values(["store_number", "transaction_count"], ascending=[True, False]))
+
+
+# # # MULTI - INDICES
+grouped = trans.groupby(["store_number", "month"]).agg({"transaction_count": ["sum", "mean"]}).sort_values(by=["month", ("transaction_count", "sum")], ascending=[True, False])
+
+print("===========grouped==============")
+print(grouped)
+
+# grouped.loc[(42, 2)]
+grouped.loc[:, [("transaction_count", "mean")]]
+grouped.loc[(3, 1), ("transaction_count", "sum")].sum()
+
+
+grouped.reset_index().droplevel(0, axis=1)  # This way we lose the first column 'layer' / headers
+
+grouped.droplevel(0, axis=1).reset_index() # By reversing - droplevel first - the column names remain
+
 
 
 
