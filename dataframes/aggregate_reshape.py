@@ -36,6 +36,17 @@ grouped.reset_index().droplevel(0, axis=1)  # This way we lose the first column 
 
 grouped.droplevel(0, axis=1).reset_index() # By reversing - droplevel first - the column names remain
 
+print("#########################")
+print(trans.head())
+
+# Calculate average of targets and total bonuses for each store
+trans.groupby(["store_number"]).agg({"met_target": "mean", "bonus_payable": "sum"}).sort_values("bonus_payable", ascending=False)
+
+# ...and days of the week
+trans.groupby(["store_number", "day_of_the_week"]).agg({"met_target": "mean", "bonus_payable": "sum"}).sort_values(["bonus_payable"], ascending=[False])
+
+
+# Average num of days each store hit the target?
 
 
 

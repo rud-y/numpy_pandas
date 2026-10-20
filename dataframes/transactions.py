@@ -69,22 +69,22 @@ print(f">>> Sorted transactions(date and transactions): \n{sorted_transactions}"
 
 print(trans.sort_index(ascending=False, axis=1))
 
-# Renaming columns
+#--- Renaming columns
 trans = trans.rename(columns={"transactions": "transaction_count", "store_nbr": "store_number"}).reindex(labels=["date", "transaction_count", "store_number"], axis=1)
 
 # Task
-# Create pct_to_target - new column that divides transaction_count by 2500
-# met_target - new column that is type boolean and returns True if the pct_to_target is 1 or more, else False
+#--- Create pct_to_target - new column that divides transaction_count by 2500
+#--- met_target - new column that is type boolean and returns True if the pct_to_target is 1 or more, else False
 
 trans = trans.assign(pct_to_target = trans["transaction_count"] / 2500)
 trans = trans.assign(met_target = trans["pct_to_target"] >= 1)
 trans["bonus_payable"] = trans["met_target"] * 100
 # print(f"---------- \n{trans.head()}")
 
-# Sum of the bonuses paid
+#--- Sum of the bonuses paid
 print(f">>> Sum of bonuses: \n{trans["bonus_payable"].sum()}")
 
-# datetime for month and week
+#--- datetime for month and week
 trans["date"] = trans["date"].astype("datetime64[ns]")
 trans["month"] = trans["date"].dt.month
 trans["day_of_the_week"] = trans["date"].dt.dayofweek
@@ -92,7 +92,7 @@ trans["day_of_the_week"] = trans["date"].dt.dayofweek
 
 
 # Task
-# Create a seasonal_bonus that applies to May-Sundays, July-Mondays, and December days
+#--- Create a seasonal_bonus that applies to May-Sundays, July-Mondays, and December days
 conditions = [
  trans["month"] == 12,
  (trans["month"] == 5) & (trans["day_of_the_week"] == 6),
@@ -105,7 +105,7 @@ trans["seasonal_bonus"] = np.select(conditions, choices, default="None")
 
 print(f">>> seasonal_bonus value counts: \n{trans["seasonal_bonus"].value_counts()}")
 
-#!!! Total number of days we need to pay the bonus
+#--- !!! Total number of days we need to pay the bonus
 print(">>> days we need to pay the bonus_ _ _ ")
 print(trans.loc[:, "seasonal_bonus"].value_counts().iloc[1:])
 
