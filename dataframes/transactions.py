@@ -134,7 +134,6 @@ print(">>> Highest overall transactions - first 10 stores:: ")
 print(trans.groupby("store_number")['transaction_count'].sum().sort_values(ascending=False).iloc[:10])
 
 
-# Grouping by multiple columns
 
 
 

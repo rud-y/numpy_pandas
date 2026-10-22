@@ -2,7 +2,7 @@
 import pandas as pd
 
 #### --- LEAGUE --- ###
-premier_league = pd.read_excel("../csv/premier_league_games_full.xlsx")
+premier_league = pd.read_excel("../csv/premier_league_games.xlsx")
 # premier_league.head()
 
 premier_league.groupby(["season", "HomeTeam"], as_index=False)[["HomeGoals"]].sum()
@@ -29,6 +29,8 @@ print(aggr_premier_league2.loc[("2010/2011", "HomeGoals", )])
 # or sum only
 aggr_result = aggr_premier_league2.loc["2010/2011" , ("HomeGoals", "sum")]
 print(aggr_result)
+
+
 
 
 #%%
