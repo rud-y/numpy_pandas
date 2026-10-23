@@ -35,11 +35,11 @@ print(f">>> Store_nbr dtyype: \n{retail["store_nbr"].dtype}")
 retail[retail["store_nbr"].isin([1,2,3,4,5,6])].pivot_table(index="family", columns="store_nbr", aggfunc=({"sales": ["sum", "mean"], "onpromotion": "max"}))
 
 #--- Heatmap - default value for axis=None : applies gradient accross the whole table - highest values=green, lowest=red
+#--- axis=1 - applied for columns
+#--- axis=0 - rows
 
-# axis=1 - applied for columns
-# axis=0 - rows
-retail.pivot_table(index="family", columns="store_nbr", values="sales", aggfunc="sum").style.background_gradient(cmap="RdYlGn", axis=1)
-
+#--- Selected stores total sales and average sales by indexed by product family
+retail[retail["store_nbr"].isin([1, 3, 22, 40, 44, 50])].pivot_table(index="family", columns="store_nbr", values="sales", aggfunc={"sales": ["sum", "mean"]}).iloc[:10].style.background_gradient(cmap="RdYlGn", axis=0)
 
 
 

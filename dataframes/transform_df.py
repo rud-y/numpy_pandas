@@ -11,39 +11,13 @@ premier = premier_league.assign(avg_team_goals = premier_league.groupby(["HomeTe
 
 premier.groupby(["HomeTeam", "AwayTeam"]).agg({"difference" : "mean"}).sort_values("difference", ascending=False)
 
+
 #--- Additional query tot compare particular data
 premier.query("HomeTeam == 'Chelsea' and AwayTeam == 'Queens Park Rangers'")
 # premier[
 #     (premier["HomeTeam"] == "Chelsea")
 #     & (premier["AwayTeam"] == "Queens Park Rangers")
 # ]
-
-
-# ----------------------
-# --- TRANSACTIONS ---
-# ----------------------
-
-
-trans = pd.read_csv("../csv/transactions.csv")
-
-#--- Renaming columns
-trans = trans.rename(columns={"transactions": "transaction_count", "store_nbr": "store_number"}).reindex(labels=["date","store_number","transaction_count"], axis=1)
-
-#--- datetime for month and week
-trans["date"] = trans["date"].astype("datetime64[ns]")
-trans["month"] = trans["date"].dt.month
-trans["day_of_the_week"] = trans["date"].dt.dayofweek
-
-#--- Assigning additional columns: 
-trans = trans.assign(pct_to_target = trans["transaction_count"] / 2500)
-trans = trans.assign(met_target = trans["pct_to_target"] >= 1)
-trans["bonus_payable"] = trans["met_target"] * 100
-
-print(trans.head())
-trans.query("store_number == 25").groupby(["day_of_the_week"]).agg({"transaction_count": "mean"})
-
-#--- Average store transactions for each store
-trans.assign(avg_store_transactions = (trans.groupby(["store_number", "day_of_the_week"])["transaction_count"].transform("mean")), difference = (lambda x: x["transaction_count"] - x["avg_store_transactions"]))
 
 
 # ---- PIVOT TABLES ----
@@ -53,7 +27,41 @@ trans.assign(avg_store_transactions = (trans.groupby(["store_number", "day_of_th
 premier.query("HomeTeam in ['Manchester United', 'Arsenal', 'Chelsea']").pivot_table(index="HomeTeam", columns="season", values="AwayGoals", aggfunc=(['max','min']), margins=True)
 
 #--- Average home goals
-premier.query("HomeTeam in ['Manchester United', 'Arsenal', 'Chelsea']").pivot_table(index="HomeTeam", columns="season", values="HomeGoals", aggfunc=('mean'), margins=True).style.background_gradient(cmap="RdYlGn", axis=None)
+premier.query("HomeTeam in ['Manchester United', 'Arsenal', 'Chelsea']").pivot_table(index="HomeTeam", columns="season", values="HomeGoals", aggfunc="mean", margins=True).style.background_gradient(cmap="RdYlGn", axis=0)
+
+prem = premier.query("HomeTeam in ['Manchester United', 'Arsenal', 'Chelsea']").pivot_table(index="HomeTeam", columns="season", values="HomeGoals", aggfunc="mean")
+
+premier.reset_index().melt(id_vars="HomeTeam", value_vars=["2008/2009"])
+
+
+
+
+
+# ----------------------
+# --- TRANSACTIONS ---
+# ----------------------
+
+
+# trans = pd.read_csv("../csv/transactions.csv")
+
+# #--- Renaming columns
+# trans = trans.rename(columns={"transactions": "transaction_count", "store_nbr": "store_number"}).reindex(labels=["date","store_number","transaction_count"], axis=1)
+
+# #--- datetime for month and week
+# trans["date"] = trans["date"].astype("datetime64[ns]")
+# trans["month"] = trans["date"].dt.month
+# trans["day_of_the_week"] = trans["date"].dt.dayofweek
+
+# #--- Assigning additional columns: 
+# trans = trans.assign(pct_to_target = trans["transaction_count"] / 2500)
+# trans = trans.assign(met_target = trans["pct_to_target"] >= 1)
+# trans["bonus_payable"] = trans["met_target"] * 100
+
+# print(trans.head())
+# trans.query("store_number == 25").groupby(["day_of_the_week"]).agg({"transaction_count": "mean"})
+
+# #--- Average store transactions for each store
+# trans.assign(avg_store_transactions = (trans.groupby(["store_number", "day_of_the_week"])["transaction_count"].transform("mean")), difference = (lambda x: x["transaction_count"] - x["avg_store_transactions"]))
 
 
 

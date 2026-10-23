@@ -91,7 +91,7 @@ trans["day_of_the_week"] = trans["date"].dt.dayofweek
 # print(trans.head())
 
 
-# Task
+#--- Task
 #--- Create a seasonal_bonus that applies to May-Sundays, July-Mondays, and December days
 conditions = [
  trans["month"] == 12,
@@ -106,7 +106,7 @@ trans["seasonal_bonus"] = np.select(conditions, choices, default="None")
 print(f">>> seasonal_bonus value counts: \n{trans["seasonal_bonus"].value_counts()}")
 
 #--- !!! Total number of days we need to pay the bonus
-print(">>> days we need to pay the bonus_ _ _ ")
+print(">>> Days we need to pay the bonus_ _ _ ")
 print(trans.loc[:, "seasonal_bonus"].value_counts().iloc[1:])
 
 print(">>> Original memory usage:")
@@ -134,7 +134,15 @@ print(">>> Highest overall transactions - first 10 stores:: ")
 print(trans.groupby("store_number")['transaction_count'].sum().sort_values(ascending=False).iloc[:10])
 
 
+# --- PIVOT TABLES ----
 
+trans.head()
 
+trans_pt = trans.loc[trans["bonus_payable"] != 0].pivot_table(index="store_number", columns="day_of_the_week", values="bonus_payable", aggfunc={"bonus_payable": ["sum", "mean"]}).iloc[:10].style.background_gradient(cmap="RdYlGn", axis=1)
+trans_pt
+
+#--- using melt()
+# trans_pt = trans.loc[trans["bonus_payable"] != 0].pivot_table(index="store_number", columns="day_of_the_week", values="bonus_payable", aggfunc="sum").iloc[:10].reset_index().melt(id_vars="store_number", value_name="bonuspayable")
+# trans_pt
 
 #%%
