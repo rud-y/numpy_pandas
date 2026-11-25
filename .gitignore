@@ -8,3 +8,5 @@ venv/
 
 
 csv/project_transactions.csv
+csv/product.csv
+csv/sales_transactions.csv
